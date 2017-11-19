@@ -12,6 +12,10 @@
     <name>Simple Mail Facade for Java</name>
     <description>A Simple API suite for Complex Mail</description>
 
+    <scm>
+        <developerConnection>scm:git:git@github.com:AyeshAlmeida/simple-mail-facade.git</developerConnection>
+    </scm>
+
     <dependencies>
         <!--javax-mail-dependency-->
         <dependency>
