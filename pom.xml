@@ -9,6 +9,9 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+    <name>Simple Mail Facade for Java</name>
+    <description>A Simple API suite for Complex Mail</description>
+
     <dependencies>
         <!--javax-mail-dependency-->
         <dependency>

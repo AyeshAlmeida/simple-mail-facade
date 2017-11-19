@@ -17,7 +17,8 @@ public final class DefaultExecutor {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultExecutor.class);
     private static final DefaultExecutor executor = new DefaultExecutor();
 
-    private DefaultExecutor(){}
+    private DefaultExecutor() {
+    }
 
     public static DefaultExecutor getDefaultExecutor() {
         return executor;
