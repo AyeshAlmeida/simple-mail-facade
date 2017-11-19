@@ -1,4 +1,4 @@
-package vs.mail.facade.executor;
+package vs.mail.facade.sender.executor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
