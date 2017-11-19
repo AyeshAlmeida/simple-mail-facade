@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="debug" name="ayesh-debug" packages=""  monitorInterval="30">
+    <Appenders>
+        <Console name="my_log" target="SYSTEM_OUT">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%c{1}] %t %-5level : %m%n</Pattern>
+            </PatternLayout>
+        </Console>
+        <File name="file_out" fileName="/vs/logs/sample/sample.log" append="true">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%c{1}] %t %-5level : %m%n</Pattern>
+            </PatternLayout>
+        </File>
+    </Appenders>
+
+    <Loggers>
+        <Root level="trace">
+            <AppenderRef ref="my_log"/>
+            <AppenderRef ref="file_out"/>
+        </Root>
+    </Loggers>
+</Configuration>
