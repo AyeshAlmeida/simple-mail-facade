@@ -11,6 +11,7 @@ import vs.mail.facade.api.email.EmailBuilder;
 import vs.mail.facade.api.email.EmailContentType;
 import vs.mail.facade.api.response.EmailResponse;
 import vs.mail.facade.api.response.EmailStatus;
+import vs.mail.facade.exception.SecurityException;
 import vs.mail.facade.sender.client.DefaultEmailClient;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class DefaultSenderTest {
     public void DefaultSenderWithSsl(){
         Configuration conf = new ConfigurationBuilder()
                 .setUsername("tcaascli@gmail.com")
-                .setPassword("password")
+                .setPassword("Test123#")
                 .setSmtpDebugEnable(true)
                 .setSecType(SecType.SSL)
                 .setSmtpHost("smtp.gmail.com")
@@ -46,7 +47,7 @@ public class DefaultSenderTest {
         assertNotEquals(response, null);
 
         assertEquals(response.getStatus(), EmailStatus.SUCCESS);
-        assertEquals(response.getDescription(), "Email Send Successfully");
+        assertEquals(response.getDescription(), "Email Sent Successfully");
 
         LOGGER.info("Default Email Sending with -SSL- Success.");
     }
@@ -55,7 +56,7 @@ public class DefaultSenderTest {
     public void DefaultSenderWithTls(){
         Configuration conf = new ConfigurationBuilder()
                 .setUsername("tcaascli@gmail.com")
-                .setPassword("password")
+                .setPassword("Test123#")
                 .setSmtpDebugEnable(true)
                 .setSecType(SecType.TLS)
                 .setSmtpHost("smtp.gmail.com")
@@ -76,16 +77,16 @@ public class DefaultSenderTest {
         assertNotEquals(response, null);
 
         assertEquals(response.getStatus(), EmailStatus.SUCCESS);
-        assertEquals(response.getDescription(), "Email Send Successfully");
+        assertEquals(response.getDescription(), "Email Sent Successfully");
 
         LOGGER.info("Default Email Sending with -TLS- Success.");
     }
 
-    @Test
+    @Test(expected = SecurityException.class)
     public void DefaultSenderWithoutSec(){
         Configuration conf = new ConfigurationBuilder()
                 .setUsername("tcaascli@gmail.com")
-                .setPassword("password")
+                .setPassword("Test123#")
                 .setSmtpDebugEnable(true)
                 .setSecType(SecType.NONE)
                 .setSmtpHost("smtp.gmail.com")
