@@ -2,6 +2,8 @@ package vs.mail.facade.api.email;
 
 import java.util.List;
 
+import static vs.mail.facade.util.EmailBuilderHelper.getUnmodifiableListForData;
+
 public class EmailBuilder {
     private String sender;
     private String subject;
@@ -27,17 +29,17 @@ public class EmailBuilder {
     }
 
     public EmailBuilder setRecipients(List<String> recipients) {
-        this.recipients = recipients;
+        this.recipients = getUnmodifiableListForData(recipients);
         return this;
     }
 
     public EmailBuilder setCarbonCopied(List<String> carbonCopied) {
-        this.carbonCopied = carbonCopied;
+        this.carbonCopied = getUnmodifiableListForData(carbonCopied);
         return this;
     }
 
     public EmailBuilder setBlindCarbonCopied(List<String> blindCarbonCopied) {
-        this.blindCarbonCopied = blindCarbonCopied;
+        this.blindCarbonCopied = getUnmodifiableListForData(blindCarbonCopied);
         return this;
     }
 
