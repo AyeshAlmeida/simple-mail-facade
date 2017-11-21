@@ -15,9 +15,11 @@ import vs.mail.facade.exception.SecurityException;
 import vs.mail.facade.sender.client.DefaultEmailClient;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 public class DefaultSenderTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultSenderTest.class);
@@ -42,12 +44,12 @@ public class DefaultSenderTest {
 
         assertNotEquals(email, null);
 
-        EmailResponse response = client.sendEmail(email);
+        Optional<EmailResponse> response = client.sendEmail(email);
 
-        assertNotEquals(response, null);
+        assertTrue(response.isPresent());
 
-        assertEquals(response.getStatus(), EmailStatus.SUCCESS);
-        assertEquals(response.getDescription(), "Email Sent Successfully");
+        assertEquals(response.get().getStatus(), EmailStatus.SUCCESS);
+        assertEquals(response.get().getDescription(), "Email Sent Successfully");
 
         LOGGER.info("Default Email Sending with -SSL- Success.");
     }
@@ -72,12 +74,12 @@ public class DefaultSenderTest {
 
         assertNotEquals(email, null);
 
-        EmailResponse response = client.sendEmail(email);
+        Optional<EmailResponse> response = client.sendEmail(email);
 
-        assertNotEquals(response, null);
+        assertTrue(response.isPresent());
 
-        assertEquals(response.getStatus(), EmailStatus.SUCCESS);
-        assertEquals(response.getDescription(), "Email Sent Successfully");
+        assertEquals(response.get().getStatus(), EmailStatus.SUCCESS);
+        assertEquals(response.get().getDescription(), "Email Sent Successfully");
 
         LOGGER.info("Default Email Sending with -TLS- Success.");
     }
@@ -102,12 +104,12 @@ public class DefaultSenderTest {
 
         assertNotEquals(email, null);
 
-        EmailResponse response = client.sendEmail(email);
+        Optional<EmailResponse> response = client.sendEmail(email);
 
-        assertNotEquals(response, null);
+        assertTrue(response.isPresent());
 
-        assertEquals(response.getStatus(), EmailStatus.FAILED);
-        assertEquals(response.getDescription(), "Email Sending Failed without Security");
+        assertEquals(response.get().getStatus(), EmailStatus.FAILED);
+        assertEquals(response.get().getDescription(), "Email Sending Failed without Security");
 
         LOGGER.error("Default Email Sending with -TLS- Failed.");
     }
