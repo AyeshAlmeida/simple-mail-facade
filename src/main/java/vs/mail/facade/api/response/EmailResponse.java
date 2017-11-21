@@ -4,6 +4,11 @@ public class EmailResponse {
     private EmailStatus status;
     private String description;
 
+    protected EmailResponse(EmailStatus status, String description) {
+        this.status = status;
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "EmailResponse{" +
@@ -16,15 +21,7 @@ public class EmailResponse {
         return status;
     }
 
-    public void setStatus(EmailStatus status) {
-        this.status = status;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }

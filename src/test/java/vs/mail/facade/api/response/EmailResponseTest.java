@@ -12,7 +12,7 @@ public class EmailResponseTest {
 
     @Test
     public void EmailResponseBuilderTest(){
-        EmailResponse response = new EmailResponse();
+        EmailResponse response = new EmailResponseBuilder().createEmailResponse();
         response.setStatus(EmailStatus.FAILED);
         response.setDescription("Email Sending Failed");
         assertNotEquals(response, null);

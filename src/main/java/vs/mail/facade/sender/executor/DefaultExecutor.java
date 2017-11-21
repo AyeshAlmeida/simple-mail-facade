@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import vs.mail.facade.api.email.Email;
 import vs.mail.facade.api.response.EmailResponse;
+import vs.mail.facade.api.response.EmailResponseBuilder;
 import vs.mail.facade.api.response.EmailStatus;
 
 import javax.mail.Message;
@@ -24,16 +25,21 @@ public final class DefaultExecutor {
         return executor;
     }
 
-    public EmailResponse fireEmail(final Email email, final Session session, final EmailResponse response) {
+    public EmailResponse fireEmail(final Email email, final Session session) {
+        EmailResponse response;
         try {
             MimeMessage message = getMessage(email, session);
             Transport.send(message);
-            response.setStatus(EmailStatus.SUCCESS);
-            response.setDescription("Email Sent Successfully");
+            response = new EmailResponseBuilder()
+                    .setStatus(EmailStatus.SUCCESS)
+                    .setDescription("Email Sent Successfully")
+                    .createEmailResponse();
             LOGGER.info("Email Send Successfully");
         } catch (MessagingException e) {
-            response.setStatus(EmailStatus.FAILED);
-            response.setDescription(e.getMessage());
+            response = new EmailResponseBuilder()
+                    .setStatus(EmailStatus.FAILED)
+                    .setDescription(e.getMessage())
+                    .createEmailResponse();
             LOGGER.error("Exception occurred in sending Email {}", e);
         }
         return response;
