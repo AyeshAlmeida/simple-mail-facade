@@ -26,14 +26,66 @@ public class DefaultSenderTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultSenderTest.class);
 
     @Test
-    public void DefaultSenderWithSsl(){
-        Configuration conf = new ConfigurationBuilder()
+    public void DefaultSenderWithSslPlainText(){
+        Configuration conf = getConfigurationSsl();
+
+        assertNotEquals(conf, null);
+
+        DefaultEmailClient client = new DefaultEmailClient(conf);
+
+        assertNotEquals(client, null);
+
+        Email email = getEmail(new EmailContent(EmailContentType.TEXT, "This is a Test Content."));
+
+        assertNotEquals(email, null);
+
+        Optional<EmailResponse> response = client.sendEmail(email);
+
+        assertTrue(response.isPresent());
+
+        assertEquals(response.get().getStatus(), EmailStatus.SUCCESS);
+        assertEquals(response.get().getDescription(), "Email Sent Successfully");
+
+        LOGGER.info("Default Email [{}] Sending with -SSL- Success.", email.getEmailContent().getContentType());
+    }
+
+    @Test
+    public void DefaultSenderWithSslHTMLTemplate(){
+        Configuration conf = getConfigurationSsl();
+
+        assertNotEquals(conf, null);
+
+        DefaultEmailClient client = new DefaultEmailClient(conf);
+
+        assertNotEquals(client, null);
+
+        Email email = getEmail(new EmailContent(EmailContentType.TEXT, "/vs/templates/email-Temp.html"));
+
+        assertNotEquals(email, null);
+
+        Optional<EmailResponse> response = client.sendEmail(email);
+
+        assertTrue(response.isPresent());
+
+        assertEquals(response.get().getStatus(), EmailStatus.SUCCESS);
+        assertEquals(response.get().getDescription(), "Email Sent Successfully");
+
+        LOGGER.info("Default Email [{}] Sending with -SSL- Success.", email.getEmailContent().getContentType());
+    }
+
+    private Configuration getConfigurationSsl() {
+        return new ConfigurationBuilder()
                 .setUsername("tcaascli@gmail.com")
                 .setPassword("Test123#")
                 .setSmtpDebugEnable(true)
                 .setSecType(SecType.SSL)
                 .setSmtpHost("smtp.gmail.com")
                 .createConfiguration();
+    }
+
+    @Test
+    public void DefaultSenderWithTlsPlainText(){
+        Configuration conf = getConfigurationTls();
 
         assertNotEquals(conf, null);
 
@@ -41,7 +93,7 @@ public class DefaultSenderTest {
 
         assertNotEquals(client, null);
 
-        Email email = getEmail();
+        Email email = getEmail(new EmailContent(EmailContentType.TEXT, "This is a Test Content."));
 
         assertNotEquals(email, null);
 
@@ -52,48 +104,46 @@ public class DefaultSenderTest {
         assertEquals(response.get().getStatus(), EmailStatus.SUCCESS);
         assertEquals(response.get().getDescription(), "Email Sent Successfully");
 
-        LOGGER.info("Default Email Sending with -SSL- Success.");
+        LOGGER.info("Default Email [{}] Sending with -TLS- Success.", email.getEmailContent().getContentType());
     }
 
     @Test
-    public void DefaultSenderWithTls(){
-        Configuration conf = new ConfigurationBuilder()
+    public void DefaultSenderWithTlsHTMLTemplate(){
+        Configuration conf = getConfigurationTls();
+
+        assertNotEquals(conf, null);
+
+        DefaultEmailClient client = new DefaultEmailClient(conf);
+
+        assertNotEquals(client, null);
+
+        Email email = getEmail(new EmailContent(EmailContentType.HTML, "/vs/templates/email-Temp.html"));
+
+        assertNotEquals(email, null);
+
+        Optional<EmailResponse> response = client.sendEmail(email);
+
+        assertTrue(response.isPresent());
+
+        assertEquals(response.get().getStatus(), EmailStatus.SUCCESS);
+        assertEquals(response.get().getDescription(), "Email Sent Successfully");
+
+        LOGGER.info("Default Email [{}] Sending with -TLS- Success.", email.getEmailContent().getContentType());
+    }
+
+    private Configuration getConfigurationTls() {
+        return new ConfigurationBuilder()
                 .setUsername("tcaascli@gmail.com")
                 .setPassword("Test123#")
                 .setSmtpDebugEnable(true)
                 .setSecType(SecType.TLS)
                 .setSmtpHost("smtp.gmail.com")
                 .createConfiguration();
-
-        assertNotEquals(conf, null);
-
-        DefaultEmailClient client = new DefaultEmailClient(conf);
-
-        assertNotEquals(client, null);
-
-        Email email = getEmail();
-
-        assertNotEquals(email, null);
-
-        Optional<EmailResponse> response = client.sendEmail(email);
-
-        assertTrue(response.isPresent());
-
-        assertEquals(response.get().getStatus(), EmailStatus.SUCCESS);
-        assertEquals(response.get().getDescription(), "Email Sent Successfully");
-
-        LOGGER.info("Default Email Sending with -TLS- Success.");
     }
 
     @Test(expected = SecurityException.class)
-    public void DefaultSenderWithoutSec(){
-        Configuration conf = new ConfigurationBuilder()
-                .setUsername("tcaascli@gmail.com")
-                .setPassword("Test123#")
-                .setSmtpDebugEnable(true)
-                .setSecType(SecType.NONE)
-                .setSmtpHost("smtp.gmail.com")
-                .createConfiguration();
+    public void DefaultSenderWithoutSecPlainText(){
+        Configuration conf = getConfigurationNoSec();
 
         assertNotEquals(conf, null);
 
@@ -101,7 +151,7 @@ public class DefaultSenderTest {
 
         assertNotEquals(client, null);
 
-        Email email = getEmail();
+        Email email = getEmail(new EmailContent(EmailContentType.TEXT, "This is a Test Content."));
 
         assertNotEquals(email, null);
 
@@ -112,10 +162,44 @@ public class DefaultSenderTest {
         assertEquals(response.get().getStatus(), EmailStatus.FAILED);
         assertEquals(response.get().getDescription(), "Email Sending Failed without Security");
 
-        LOGGER.error("Default Email Sending with -TLS- Failed.");
+        LOGGER.error("Default Email [{}] Sending without security Failed.", email.getEmailContent().getContentType());
     }
 
-    private Email getEmail(){
+    @Test(expected = SecurityException.class)
+    public void DefaultSenderWithoutSecHTMLTemplate(){
+        Configuration conf = getConfigurationNoSec();
+
+        assertNotEquals(conf, null);
+
+        DefaultEmailClient client = new DefaultEmailClient(conf);
+
+        assertNotEquals(client, null);
+
+        Email email = getEmail(new EmailContent(EmailContentType.HTML, "/vs/templates/email-Temp.html"));
+
+        assertNotEquals(email, null);
+
+        Optional<EmailResponse> response = client.sendEmail(email);
+
+        assertTrue(response.isPresent());
+
+        assertEquals(response.get().getStatus(), EmailStatus.FAILED);
+        assertEquals(response.get().getDescription(), "Email Sending Failed without Security");
+
+        LOGGER.error("Default Email [{}] Sending without security Failed.", email.getEmailContent().getContentType());
+    }
+
+    private Configuration getConfigurationNoSec() {
+        return new ConfigurationBuilder()
+                .setUsername("tcaascli@gmail.com")
+                .setPassword("Test123#")
+                .setSmtpDebugEnable(true)
+                .setSecType(SecType.NONE)
+                .setSmtpHost("smtp.gmail.com")
+                .createConfiguration();
+    }
+
+    private Email getEmail(EmailContent content){
         ArrayList<String> recipients = new ArrayList<>();
         recipients.add("ayesh9206@gmail.com");
         recipients.add("apeksha123sahana@gmail.com");
@@ -131,7 +215,7 @@ public class DefaultSenderTest {
                 .setCarbonCopied(carbonCoppied)
                 .setBlindCarbonCopied(blindCarbonCoppied)
                 .setSubject("Test Subject")
-                .setEmailContent(new EmailContent(EmailContentType.TEXT, "Test Content"))
+                .setEmailContent(content)
                 .createEmail();
         return email;
     }
