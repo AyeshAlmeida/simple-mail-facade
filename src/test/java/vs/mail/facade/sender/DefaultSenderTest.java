@@ -59,7 +59,7 @@ public class DefaultSenderTest {
 
         assertNotEquals(client, null);
 
-        Email email = getEmail(new EmailContent(EmailContentType.TEXT, "/vs/templates/email-Temp.html"));
+        Email email = getEmail(new EmailContent(EmailContentType.HTML, "/vs/templates/email-Temp.html"));
 
         assertNotEquals(email, null);
 
