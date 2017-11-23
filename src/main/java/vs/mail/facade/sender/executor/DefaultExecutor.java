@@ -7,12 +7,14 @@ import vs.mail.facade.api.response.EmailResponse;
 import vs.mail.facade.api.response.EmailResponseBuilder;
 import vs.mail.facade.api.response.EmailStatus;
 
-import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import java.io.IOException;
+
+import static vs.mail.facade.util.MimeMessageHelper.getMessage;
 
 public final class DefaultExecutor {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultExecutor.class);
@@ -35,7 +37,7 @@ public final class DefaultExecutor {
                     .setDescription("Email Sent Successfully")
                     .createEmailResponse();
             LOGGER.info("Email Send Successfully");
-        } catch (MessagingException e) {
+        } catch (MessagingException | IOException e) {
             response = new EmailResponseBuilder()
                     .setStatus(EmailStatus.FAILED)
                     .setDescription(e.getMessage())
@@ -43,15 +45,5 @@ public final class DefaultExecutor {
             LOGGER.error("Exception occurred in sending Email {}", e);
         }
         return response;
-    }
-
-    private MimeMessage getMessage(Email email, Session session) throws MessagingException {
-        MimeMessage message = new MimeMessage(session);
-        message.setFrom(new InternetAddress(email.getSender()));
-        InternetAddress[] recipients = InternetAddress.parse(String.join(",", email.getRecipients()));
-        message.addRecipients(Message.RecipientType.TO, recipients);
-        message.setSubject(email.getSubject());
-        message.setText(email.getContent());
-        return message;
     }
 }

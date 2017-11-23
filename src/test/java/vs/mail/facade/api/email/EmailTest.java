@@ -3,6 +3,8 @@ package vs.mail.facade.api.email;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import vs.mail.facade.api.email.content.EmailContent;
+import vs.mail.facade.api.email.content.EmailContentType;
 
 import java.util.ArrayList;
 
@@ -23,14 +25,14 @@ public class EmailTest {
         ArrayList<String> blindCarbonCoppied = new ArrayList<>();
         blindCarbonCoppied.add("bcc1@gmail.com");
         blindCarbonCoppied.add("bcc2@gmail.com");
+        EmailContent emailContent = new EmailContent(EmailContentType.TEXT, "This is a Test Description.");
         Email email = new EmailBuilder()
                 .setSender("test@test.lk")
                 .setRecipients(recipients)
                 .setCarbonCopied(carbonCoppied)
                 .setBlindCarbonCopied(blindCarbonCoppied)
                 .setSubject("Test Subject")
-                .setContent("Test Content")
-                .setContentType(EmailContentType.TEXT)
+                .setEmailContent(emailContent)
                 .createEmail();
 
         assertNotEquals(email, null);
@@ -39,8 +41,7 @@ public class EmailTest {
         assertEquals(email.getCarbonCopied(), carbonCoppied);
         assertEquals(email.getBlindCarbonCopied(), blindCarbonCoppied);
         assertEquals(email.getSubject(), "Test Subject");
-        assertEquals(email.getContent(), "Test Content");
-        assertEquals(email.getContentType(), EmailContentType.TEXT);
+        assertEquals(email.getEmailContent(), emailContent);
         LOGGER.info("EmailBuilderTest is Successful");
     }
 

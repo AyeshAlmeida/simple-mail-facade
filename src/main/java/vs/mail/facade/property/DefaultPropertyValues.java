@@ -8,4 +8,5 @@ public final class DefaultPropertyValues {
     public static final boolean AUTH_DISABLE = false;
     public static final boolean START_TLS_ENABLE = true;
     public static final boolean START_TLS_DISABLE = false;
+    public static final String CONTENT_TYPE_TEXT_HTML = "text/html";
 }

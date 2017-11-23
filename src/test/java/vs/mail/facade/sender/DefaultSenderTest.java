@@ -8,7 +8,8 @@ import vs.mail.facade.api.config.ConfigurationBuilder;
 import vs.mail.facade.api.config.SecType;
 import vs.mail.facade.api.email.Email;
 import vs.mail.facade.api.email.EmailBuilder;
-import vs.mail.facade.api.email.EmailContentType;
+import vs.mail.facade.api.email.content.EmailContent;
+import vs.mail.facade.api.email.content.EmailContentType;
 import vs.mail.facade.api.response.EmailResponse;
 import vs.mail.facade.api.response.EmailStatus;
 import vs.mail.facade.exception.SecurityException;
@@ -130,8 +131,7 @@ public class DefaultSenderTest {
                 .setCarbonCopied(carbonCoppied)
                 .setBlindCarbonCopied(blindCarbonCoppied)
                 .setSubject("Test Subject")
-                .setContent("Test Content")
-                .setContentType(EmailContentType.TEXT)
+                .setEmailContent(new EmailContent(EmailContentType.TEXT, "Test Content"))
                 .createEmail();
         return email;
     }
