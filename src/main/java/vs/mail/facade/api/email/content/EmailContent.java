@@ -25,6 +25,10 @@ public class EmailContent {
         return contentType.equals(EmailContentType.HTML);
     }
 
+    public EmailContentType getContentType() {
+        return contentType;
+    }
+
     public String getSource() {
         return source;
     }
