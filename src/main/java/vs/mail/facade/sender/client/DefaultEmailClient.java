@@ -9,14 +9,13 @@ import vs.mail.facade.api.response.EmailResponse;
 import vs.mail.facade.exception.SecurityException;
 import vs.mail.facade.sender.executor.DefaultExecutor;
 
-import javax.mail.Authenticator;
-import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import java.util.Optional;
 import java.util.Properties;
 
 import static vs.mail.facade.config.EmailPropertyBuilder.getPropertiesForSslSecurity;
 import static vs.mail.facade.config.EmailPropertyBuilder.getPropertiesForTlsSecurity;
+import static vs.mail.facade.util.EmailClientHelper.getAuthenticator;
 
 public final class DefaultEmailClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultEmailClient.class);
@@ -49,12 +48,7 @@ public final class DefaultEmailClient {
     private EmailResponse sendWithSsl(final Email email) {
         LOGGER.info("Mail is sending over {}", configuration.getSecType());
         Properties properties = getPropertiesForSslSecurity(configuration);
-        Session session = Session.getDefaultInstance(properties, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(configuration.getUsername(), configuration.getPassword());
-            }
-        });
+        Session session = Session.getDefaultInstance(properties, getAuthenticator(configuration));
         session.setDebug(configuration.isSmtpDebugEnable());
         return executor.fireEmail(email, session);
     }
@@ -62,12 +56,7 @@ public final class DefaultEmailClient {
     private EmailResponse sendWithTls(final Email email) {
         LOGGER.info("Mail is sending over {}", configuration.getSecType());
         Properties properties = getPropertiesForTlsSecurity(configuration);
-        Session session = Session.getInstance(properties, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(configuration.getUsername(), configuration.getPassword());
-            }
-        });
+        Session session = Session.getInstance(properties, getAuthenticator(configuration));
         session.setDebug(configuration.isSmtpDebugEnable());
         return executor.fireEmail(email, session);
     }
