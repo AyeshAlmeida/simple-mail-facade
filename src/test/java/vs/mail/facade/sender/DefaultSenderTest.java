@@ -229,11 +229,11 @@ public class DefaultSenderTest {
         recipients.add("ayesh9206@gmail.com");
         recipients.add("apeksha123sahana@gmail.com");
         ArrayList<String> carbonCoppied = new ArrayList<>();
-        carbonCoppied.add("cc1@gmail.com");
-        carbonCoppied.add("cc2@gmail.com");
+        carbonCoppied.add("ccuserone@cuvox.de");
+        carbonCoppied.add("ccusertwo@jourrapide.com");
         ArrayList<String> blindCarbonCoppied = new ArrayList<>();
-        blindCarbonCoppied.add("bcc1@gmail.com");
-        blindCarbonCoppied.add("bcc2@gmail.com");
+        blindCarbonCoppied.add("bccone@jourrapide.com");
+        blindCarbonCoppied.add("bcctwo@jourrapide.com");
         Email email = new EmailBuilder()
                 .setSender("tcaascli@gmail.com")
                 .setRecipients(recipients)
