@@ -16,7 +16,7 @@ import java.io.IOException;
 
 import static vs.mail.facade.util.MimeMessageHelper.getMessage;
 
-public final class DefaultExecutor {
+public final class DefaultExecutor implements EmailExecutor{
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultExecutor.class);
     private static final DefaultExecutor executor = new DefaultExecutor();
 

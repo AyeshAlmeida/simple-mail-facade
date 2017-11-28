@@ -8,6 +8,7 @@ import vs.mail.facade.api.email.Email;
 import vs.mail.facade.api.response.EmailResponse;
 import vs.mail.facade.exception.SecurityException;
 import vs.mail.facade.sender.executor.DefaultExecutor;
+import vs.mail.facade.sender.executor.EmailExecutor;
 
 import javax.mail.Session;
 import java.util.Optional;
@@ -19,7 +20,7 @@ import static vs.mail.facade.util.EmailClientHelper.getAuthenticator;
 
 public final class DefaultEmailClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultEmailClient.class);
-    private static final DefaultExecutor executor = DefaultExecutor.getDefaultExecutor();
+    private static final EmailExecutor executor = DefaultExecutor.getDefaultExecutor();
     private final Configuration configuration;
 
     public DefaultEmailClient(Configuration configuration) {
