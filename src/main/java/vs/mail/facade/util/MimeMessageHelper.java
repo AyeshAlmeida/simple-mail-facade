@@ -1,5 +1,7 @@
 package vs.mail.facade.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import vs.mail.facade.api.email.Email;
 import vs.mail.facade.exception.NoRecipientException;
 
@@ -17,6 +19,8 @@ import java.util.List;
 import static vs.mail.facade.property.DefaultPropertyValues.CONTENT_TYPE_TEXT_HTML;
 
 public final class MimeMessageHelper {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MimeMessageHelper.class);
+
     public static MimeMessage getMessage(Email email, Session session) throws MessagingException, IOException {
         MimeMessage message = new MimeMessage(session);
         message.setFrom(new InternetAddress(email.getSender()));
@@ -28,6 +32,7 @@ public final class MimeMessageHelper {
 
     private static void addRecipients(Email email, MimeMessage message) throws MessagingException {
         if (email.getRecipients() == null || email.getRecipients().size() == 0) {
+            LOGGER.error("NoRecipientException occurred while sending email without specifying a recipient");
             throw new NoRecipientException("No Recipient found for email");
         }
 
