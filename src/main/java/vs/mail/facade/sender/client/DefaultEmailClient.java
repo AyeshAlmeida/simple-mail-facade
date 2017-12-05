@@ -9,6 +9,7 @@ import vs.mail.facade.api.response.EmailResponse;
 import vs.mail.facade.exception.SecurityException;
 import vs.mail.facade.sender.executor.DefaultExecutor;
 import vs.mail.facade.sender.executor.EmailExecutor;
+import vs.mail.facade.sender.helper.EmailClientHelper;
 
 import javax.mail.Session;
 import java.util.Optional;
@@ -30,35 +31,17 @@ public final class DefaultEmailClient {
     public Optional<EmailResponse> sendEmail(final Email email) {
         LOGGER.info("Sending Email [{}] with Configurations [{}]", email, configuration);
         if (configuration.getSecType().equals(SecType.NONE)) {
-            return Optional.of(sendWithoutSecurity(email));
+            return Optional.of(
+                    EmailClientHelper.sendWithoutSecurity(email, configuration, executor));
         }
         if (configuration.getSecType().equals(SecType.SSL)) {
-            return Optional.of(sendWithSsl(email));
+            return Optional.of(
+                    EmailClientHelper.sendWithSsl(email, configuration, executor));
         }
         if (configuration.getSecType().equals(SecType.TLS)) {
-            return Optional.of(sendWithTls(email));
+            return Optional.of(
+                    EmailClientHelper.sendWithTls(email, configuration, executor));
         }
         return Optional.empty();
-    }
-
-    private EmailResponse sendWithoutSecurity(final Email email) {
-        LOGGER.error("SecurityException Occurred while sending Email via non-secure channel");
-        throw new SecurityException("Cannot Send Mails without Authentication");
-    }
-
-    private EmailResponse sendWithSsl(final Email email) {
-        LOGGER.info("Mail is sending over {}", configuration.getSecType());
-        Properties properties = getPropertiesForSslSecurity(configuration);
-        Session session = Session.getDefaultInstance(properties, getAuthenticator(configuration));
-        session.setDebug(configuration.isSmtpDebugEnable());
-        return executor.fireEmail(email, session);
-    }
-
-    private EmailResponse sendWithTls(final Email email) {
-        LOGGER.info("Mail is sending over {}", configuration.getSecType());
-        Properties properties = getPropertiesForTlsSecurity(configuration);
-        Session session = Session.getInstance(properties, getAuthenticator(configuration));
-        session.setDebug(configuration.isSmtpDebugEnable());
-        return executor.fireEmail(email, session);
     }
 }
