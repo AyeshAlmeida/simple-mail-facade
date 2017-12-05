@@ -4,7 +4,7 @@
 
     <groupId>vs.mail.facade</groupId>
     <artifactId>simple-mail-facade</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
     <packaging>jar</packaging>
 
     <name>Simple Mail Facade for Java</name>
@@ -12,7 +12,7 @@
 
     <scm>
         <developerConnection>scm:git:git@github.com:AyeshAlmeida/simple-mail-facade.git</developerConnection>
-      <tag>0.0.1</tag>
+      <tag>0.0.2</tag>
   </scm>
 
     <dependencies>
