@@ -48,7 +48,8 @@ public final class AsyncRunner {
     }
 
     public static EmailResponse getGenericEmailResponseForAsyncSubmit() {
-        return new EmailResponseBuilder().setStatus(EmailStatus.SUBMITTED_TO_SEND)
+        return new EmailResponseBuilder()
+                .setStatus(EmailStatus.SUBMITTED_TO_SEND)
                 .setDescription("Email has been submitted to send Asynchronously")
                 .createEmailResponse();
     }

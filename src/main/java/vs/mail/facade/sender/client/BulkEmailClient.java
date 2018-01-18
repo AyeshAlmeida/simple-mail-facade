@@ -7,7 +7,6 @@ import vs.mail.facade.api.email.Email;
 import vs.mail.facade.api.response.EmailResponse;
 import vs.mail.facade.api.response.EmailResponseBuilder;
 import vs.mail.facade.api.response.EmailStatus;
-import vs.mail.facade.sender.client.async.AsyncRunner;
 import vs.mail.facade.sender.executor.DefaultExecutor;
 import vs.mail.facade.sender.executor.EmailExecutor;
 
@@ -17,7 +16,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import static vs.mail.facade.sender.client.async.AsyncRunner.doExecute;
-import static vs.mail.facade.sender.client.async.AsyncRunner.getGenericEmailResponseForAsyncSubmit;
 
 public final class BulkEmailClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(BulkEmailClient.class);
@@ -31,9 +29,14 @@ public final class BulkEmailClient {
 
     public Optional<EmailResponse> sendEmail(final List<Email> emails) {
         LOGGER.info("Sending {} Emails with configuration [{}]", emails.size(), configuration);
-        for (Email email: emails) {
-            doExecute(configuration, email, emailExecutor, executorService);
-        }
-        return Optional.of(getGenericEmailResponseForAsyncSubmit());
+        emails.forEach(email -> doExecute(configuration, email, emailExecutor, executorService));
+        return Optional.of(getEmailResponseForBulkSubmit());
+    }
+
+    public static EmailResponse getEmailResponseForBulkSubmit() {
+        return new EmailResponseBuilder()
+                .setStatus(EmailStatus.SUBMITTED_TO_SEND)
+                .setDescription("Emails have been submitted for bulk-send")
+                .createEmailResponse();
     }
 }
