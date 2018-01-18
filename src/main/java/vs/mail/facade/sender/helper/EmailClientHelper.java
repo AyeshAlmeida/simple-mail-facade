@@ -18,6 +18,9 @@ import static vs.mail.facade.util.EmailClientHelper.getAuthenticator;
 public final class EmailClientHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailClientHelper.class);
 
+    protected EmailClientHelper() {
+    }
+
     public static EmailResponse sendWithoutSecurity(final Email email,
                                                     final Configuration configuration,
                                                     final EmailExecutor executor) {
