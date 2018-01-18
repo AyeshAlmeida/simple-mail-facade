@@ -14,7 +14,7 @@ import javax.mail.internet.MimeMessage;
 
 import java.io.IOException;
 
-import static vs.mail.facade.util.MimeMessageHelper.getMessage;
+import static vs.mail.facade.util.MimeMessageHelperUtil.getMessage;
 
 public final class DefaultExecutor implements EmailExecutor{
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultExecutor.class);

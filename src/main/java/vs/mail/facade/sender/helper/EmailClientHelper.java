@@ -13,7 +13,7 @@ import java.util.Properties;
 
 import static vs.mail.facade.config.EmailPropertyBuilder.getPropertiesForSslSecurity;
 import static vs.mail.facade.config.EmailPropertyBuilder.getPropertiesForTlsSecurity;
-import static vs.mail.facade.util.EmailClientHelper.getAuthenticator;
+import static vs.mail.facade.util.EmailClientUtil.getAuthenticator;
 
 public final class EmailClientHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailClientHelper.class);

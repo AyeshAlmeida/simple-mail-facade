@@ -18,8 +18,8 @@ import java.util.List;
 
 import static vs.mail.facade.property.DefaultPropertyValues.CONTENT_TYPE_TEXT_HTML;
 
-public final class MimeMessageHelper {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MimeMessageHelper.class);
+public final class MimeMessageHelperUtil {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MimeMessageHelperUtil.class);
 
     public static MimeMessage getMessage(Email email, Session session) throws MessagingException, IOException {
         MimeMessage message = new MimeMessage(session);

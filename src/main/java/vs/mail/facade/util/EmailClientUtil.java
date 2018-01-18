@@ -5,7 +5,7 @@ import vs.mail.facade.api.config.Configuration;
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 
-public final class EmailClientHelper {
+public final class EmailClientUtil {
     public static Authenticator getAuthenticator(final Configuration configuration) {
         return new Authenticator() {
             @Override
