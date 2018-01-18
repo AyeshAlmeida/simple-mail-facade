@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="debug" name="ayesh-debug" packages=""  monitorInterval="30">
+<Configuration status="debug" name="email-debug" packages=""  monitorInterval="30">
     <Appenders>
         <Console name="my_log" target="SYSTEM_OUT">
             <PatternLayout>
                 <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%c{1}] %t %-5level : %m%n</Pattern>
             </PatternLayout>
         </Console>
-        <File name="file_out" fileName="/vs/logs/sample/sample.log" append="true">
+        <File name="file_out" fileName="/vs/logs/email/email.log" append="true">
             <PatternLayout>
                 <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%c{1}] %t %-5level : %m%n</Pattern>
             </PatternLayout>
